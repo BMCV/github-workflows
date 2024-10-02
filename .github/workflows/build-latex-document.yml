@@ -22,6 +22,9 @@ on:
       docker_image:
         required: false
         type: string
+      submodules:
+        default: false
+        type: boolean
 
 jobs:
   setup:
@@ -70,8 +73,10 @@ jobs:
 
       - name: Initialize
         uses: actions/checkout@v4
+        with:
+          submodules: ${{ inputs.submodules }}
 
-      - uses: kostrykin/build-latex-document-action@master
+      - uses: kostrykin/build-latex-document-action@v2.2.0
         with:
           working_directory: ${{ inputs.working_directory }}
           document_filename: ${{ inputs.document_filename }}
