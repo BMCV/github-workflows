@@ -20,6 +20,7 @@ on:
 jobs:
   setup:
     name: Setup the target branch
+    id: setup
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
@@ -44,6 +45,7 @@ jobs:
 
   build:
     name: Build the LaTeX document
+    needs: [setup]
     runs-on: ubuntu-latest
     if: ${{
         github.event_name == 'pull_request' ||
