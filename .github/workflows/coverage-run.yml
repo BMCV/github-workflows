@@ -1,6 +1,10 @@
 on:
   workflow_call:
     inputs:
+      working-directory:
+        type: string
+        default: .
+        required: false
       main_branch:
         type: string
         required: true
@@ -57,6 +61,7 @@ jobs:
       if: ${{ inputs.run != '' }}
       uses: kostrykin/report-test-coverage-action@v1.1.0
       with:
+        working-directory: ${{ inputs.working-directory }}
         report: ${{ matrix.python-version == inputs.main_python_version }}
         gist-id: ${{ inputs.gist-id }}
         gist-auth: ${{ secrets.gist-auth }}
@@ -68,6 +73,7 @@ jobs:
       if: ${{ inputs.run == '' }}
       uses: kostrykin/report-test-coverage-action@v1.1.0
       with:
+        working-directory: ${{ inputs.working-directory }}
         report: ${{ matrix.python-version == inputs.main_python_version }}
         gist-id: ${{ inputs.gist-id }}
         gist-auth: ${{ secrets.gist-auth }}
