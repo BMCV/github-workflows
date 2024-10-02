@@ -20,7 +20,6 @@ on:
 jobs:
   setup:
     name: Setup the target branch
-    id: setup
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
     steps:
