@@ -11,3 +11,4 @@ Examples:
 
 - https://github.com/BMCV/mobi-fs3-python-assignments
 - https://github.com/BMCV/mobi-fs5-python-assignments
+- https://github.com/BMCV/mobi-fs5-python-exam
