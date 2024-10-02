@@ -13,9 +13,38 @@ on:
       build_future_branches:
         required: true
         type: boolean
+      target_branch:
+        required: true
+        type: string
+        default: pdf
 
 jobs:
+  setup:
+    name: Setup the target branch
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+
+      - name: Initialize
+        uses: actions/checkout@v4
+
+      - name: Check existence of the target branch
+        id: check_target_branch
+        shell: bash
+        run: |
+          echo "ok=$(git ls-remote --heads origin refs/heads/${{ inputs.target_branch }})" >> $GITHUB_OUTPUT
+
+      - name: Create the target branch
+        if: steps.check_target_branch.ok == false
+        shell: bash
+        run: |
+          git checkout --orphan ${{ inputs.target_branch }}
+          git reset --hard
+          git commit --allow-empty -m "Create target branch"
+          git push origin ${{ inputs.target_branch }}
+
   build:
+    name: Build the LaTeX document
     runs-on: ubuntu-latest
     if: ${{
         github.event_name == 'pull_request' ||
@@ -34,3 +63,4 @@ jobs:
           working_directory: ${{ inputs.working_directory }}
           document_filename: ${{ inputs.document_filename }}
           sources: ${{ inputs.sources }}
+          target_branch: ${{ inputs.target_branch }}
