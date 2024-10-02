@@ -16,6 +16,9 @@ on:
       target_branch:
         type: string
         default: pdf
+      latexmk_use_xelatex:
+        default: false
+        type: boolean
 
 jobs:
   setup:
