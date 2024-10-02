@@ -74,3 +74,4 @@ jobs:
           document_filename: ${{ inputs.document_filename }}
           sources: ${{ inputs.sources }}
           target_branch: ${{ inputs.target_branch }}
+          latexmk_use_xelatex: ${{ inputs.latexmk_use_xelatex }}
