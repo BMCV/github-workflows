@@ -10,5 +10,6 @@ Workflow definitions:
 Examples:
 
 - https://github.com/BMCV/mobi-fs3-python-assignments
+- https://github.com/BMCV/mobi-fs3-python-lecture
 - https://github.com/BMCV/mobi-fs5-python-assignments
 - https://github.com/BMCV/mobi-fs5-python-exam
