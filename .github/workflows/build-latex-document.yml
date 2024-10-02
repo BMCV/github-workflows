@@ -19,6 +19,9 @@ on:
       latexmk_use_xelatex:
         default: false
         type: boolean
+      docker_image:
+        required: false
+        type: string
 
 jobs:
   setup:
@@ -68,10 +71,11 @@ jobs:
       - name: Initialize
         uses: actions/checkout@v4
 
-      - uses: kostrykin/build-latex-document-action@v2.2.0
+      - uses: kostrykin/build-latex-document-action@master
         with:
           working_directory: ${{ inputs.working_directory }}
           document_filename: ${{ inputs.document_filename }}
           sources: ${{ inputs.sources }}
           target_branch: ${{ inputs.target_branch }}
           latexmk_use_xelatex: ${{ inputs.latexmk_use_xelatex }}
+          docker_image: ${{ inputs.docker_image }}
