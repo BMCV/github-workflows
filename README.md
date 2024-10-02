@@ -23,4 +23,6 @@ Workflow definitions:
 
 Examples:
 
+- https://github.com/BMCV/giatools
 - https://github.com/kostrykin/repype
+- https://github.com/kosmotive/tournaments
