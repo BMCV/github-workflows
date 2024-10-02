@@ -14,7 +14,6 @@ on:
         required: true
         type: boolean
       target_branch:
-        required: true
         type: string
         default: pdf
 
