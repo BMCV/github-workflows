@@ -4,8 +4,8 @@
 
 Workflow definitions:
 
-- .github/workflows/build-latex-document.yml
-- .github/workflows/post-pr-comment.yml
+- .github/workflows/document-build-latex.yml
+- .github/workflows/document-post-pr-comment.yml
 
 Examples:
 
