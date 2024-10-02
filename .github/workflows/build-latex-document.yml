@@ -40,8 +40,15 @@ jobs:
         run: |
           git checkout --orphan ${{ inputs.target_branch }}
           git reset --hard
-          git commit --allow-empty -m "Create target branch"
-          git push origin ${{ inputs.target_branch }}
+
+      - name: Commit and push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: ${{ inputs.target_branch }}
+          commit_message: 'Create target branch'
+          create_branch: true
+          commit_options: '--allow-empty'
+          skip_dirty_check: true
 
   build:
     name: Build the LaTeX document
