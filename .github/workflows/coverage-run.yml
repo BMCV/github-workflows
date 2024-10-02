@@ -53,7 +53,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install ${{ inputs.pip_install }}
 
-    - name: Run coverage.py with custom command line
+    - name: Run custom command line
       if: ${{ inputs.run != '' }}
       uses: kostrykin/report-test-coverage-action@v1.1.0
       with:
@@ -63,7 +63,7 @@ jobs:
         gist-filename: ${{ inputs.gist-filename }}
         run: ${{ inputs.run }}
 
-    - name: Run tests with default command line
+    - name: Run default command line
       if: ${{ inputs.run == '' }}
       uses: kostrykin/report-test-coverage-action@v1.1.0
       with:
