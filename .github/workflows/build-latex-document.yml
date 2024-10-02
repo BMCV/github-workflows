@@ -27,28 +27,21 @@ jobs:
       - name: Initialize
         uses: actions/checkout@v4
 
-      - name: Check existence of the target branch
-        id: check_target_branch
-        shell: bash
-        run: |
-          echo "ok=$(git ls-remote --heads origin refs/heads/${{ inputs.target_branch }})" >> $GITHUB_OUTPUT
-
       - name: Create the target branch
-        if: steps.check_target_branch.ok == false
         shell: bash
         run: |
           git checkout --orphan ${{ inputs.target_branch }}
           git reset --hard
 
       - name: Add .nojekyll
-        if: steps.check_target_branch.ok == false
         shell: bash
         run: |
           touch .nojekyll
 
-      - name: Commit and push
+      - name: Commit and push (fails silently if the branch already exists)
         if: steps.check_target_branch.ok == false
         uses: stefanzweifel/git-auto-commit-action@v5
+        continue-on-error: true
         with:
           branch: ${{ inputs.target_branch }}
           commit_message: 'Create target branch'
