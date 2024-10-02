@@ -25,7 +25,7 @@ on:
       env:
         type: string
         required: false
-        default: '[]'
+        default: '{}'
     secrets:
       gist-auth:
         required: true
@@ -62,6 +62,7 @@ jobs:
         gist-auth: ${{ secrets.gist-auth }}
         gist-filename: ${{ inputs.gist-filename }}
         run: ${{ inputs.run }}
+      env: ${{ fromJSON(inputs.env) }}
 
     - name: Run default command line
       if: ${{ inputs.run == '' }}
