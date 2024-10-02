@@ -40,7 +40,14 @@ jobs:
           git checkout --orphan ${{ inputs.target_branch }}
           git reset --hard
 
+      - name: Add .nojekyll
+        if: steps.check_target_branch.ok == false
+        shell: bash
+        run: |
+          touch .nojekyll
+
       - name: Commit and push
+        if: steps.check_target_branch.ok == false
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: ${{ inputs.target_branch }}
