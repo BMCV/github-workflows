@@ -1,6 +1,14 @@
 on:
   workflow_call:
     inputs:
+      fetch-depth:
+        type: number
+        default: 1
+        required: false
+      lfs:
+        type: boolean
+        default: false
+        required: false
       working-directory:
         type: string
         default: .
@@ -46,6 +54,9 @@ jobs:
 
     - uses: actions/checkout@v4
       if: github.event_name == 'pull_request' || github.ref == 'refs/heads/${{ inputs.main_branch }}'
+      with:
+        fetch-depth: ${{ inputs.fetch-depth }}
+        lfs: ${{ inputs.lfs }}
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
