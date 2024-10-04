@@ -25,6 +25,9 @@ on:
       pip_install:
         type: string
         default: -r requirements.txt -r tests/requirements.txt
+      apt_install:
+        type: string
+        required: false
       gist-id:
         type: string
         required: true
@@ -57,6 +60,12 @@ jobs:
       with:
         fetch-depth: ${{ inputs.fetch-depth }}
         lfs: ${{ inputs.lfs }}
+
+    - name: Install system dependencies
+      if: ${{ inputs.apt_install }}
+      shell: bash
+      run: |
+        sudo apt install -y ${{ inputs.apt_install }}
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
