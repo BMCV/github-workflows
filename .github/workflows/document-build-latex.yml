@@ -16,6 +16,9 @@ on:
       target_branch:
         type: string
         default: pdf
+      target_repo:
+        type: string
+        required: false
       latexmk_use_xelatex:
         default: false
         type: boolean
@@ -25,6 +28,9 @@ on:
       submodules:
         default: false
         type: boolean
+    secrets:
+      admin-auth:
+        required: false
 
 jobs:
   setup:
@@ -84,3 +90,28 @@ jobs:
           target_branch: ${{ inputs.target_branch }}
           latexmk_use_xelatex: ${{ inputs.latexmk_use_xelatex }}
           docker_image: ${{ inputs.docker_image }}
+
+  push_to_target_repo:
+    name: Push to target repository
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: inputs.target_repo
+    steps:
+
+      - name: Check existence of target repository
+        id: target_repo_exists
+        shell: bash
+        run: |
+          echo "ok=$(git ls-remote git@github.com:${{ inputs.target_repo }})" >> $GITHUB_OUTPUT
+
+      - name: Create the target repository
+        if: steps.target_repo_exists.ok == false
+        shell: bash
+        run: |
+          echo "${{ secrets.admin-auth }}" | gh auth login --with-token
+          gh repo create "${{ inputs.target_repo }}" --disable-issues --disable-wiki --public
+
+      - name: Checkout the target repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.target_repo }}
