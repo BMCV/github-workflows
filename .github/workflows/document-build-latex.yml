@@ -48,7 +48,6 @@ jobs:
           touch .nojekyll
 
       - name: Commit and push (fails silently if the branch already exists)
-        if: steps.check_target_branch.ok == false
         uses: stefanzweifel/git-auto-commit-action@v5
         continue-on-error: true
         with:
