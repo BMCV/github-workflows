@@ -19,6 +19,9 @@ on:
       target_repo:
         type: string
         required: false
+      target_repo_branch:
+        type: string
+        required: false
       latexmk_use_xelatex:
         default: false
         type: boolean
@@ -29,7 +32,7 @@ on:
         default: false
         type: boolean
     secrets:
-      admin-auth:
+      target_repo_auth:
         required: false
 
 jobs:
@@ -102,25 +105,12 @@ jobs:
       }}
     steps:
 
-      - name: Check existence of target repository
-        id: target_repo_exists
-        shell: bash
-        run: |
-          echo "ok=$(git ls-remote git@github.com:${{ inputs.target_repo }})" >> $GITHUB_OUTPUT
-
-      - name: Create the target repository
-        if: steps.target_repo_exists.ok == false
-        shell: bash
-        run: |
-          echo "${{ secrets.admin-auth }}" | gh auth login --with-token
-          gh repo create "${{ inputs.target_repo }}" --disable-issues --disable-wiki --public
-
       - name: Checkout the target repository
         uses: actions/checkout@v4
         with:
           repository: ${{ inputs.target_repo }}
 
-      - name: Create the repository branch
+      - name: Create the target repository branch
         shell: bash
         run: |
           git checkout --orphan ${{ github.event.repository.name }}
@@ -155,14 +145,15 @@ jobs:
           ref: ${{ inputs.target_branch }}
           path: src
 
-      - name: Checkout the target repository
+      - name: Checkout the target repository branch
         uses: actions/checkout@v4
         with:
           repository: ${{ inputs.target_repo }}
           ref: ${{ github.event.repository.name }}
           path: dst
+          token: ${{ secrets.target_repo_auth }}
       
-      - name: Populate the target repository
+      - name: Populate the target repository branch
         shell: bash
         run: |
           cp -Rf src/* dst/
