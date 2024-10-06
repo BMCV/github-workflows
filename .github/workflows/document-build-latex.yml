@@ -180,4 +180,4 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           repository: dst
-          commit_message: ${{ steps.commit_message.text }}
+          commit_message: ${{ steps.commit_message.outputs.text }}
