@@ -16,6 +16,12 @@ on:
       target_branch:
         type: string
         default: pdf
+      target_repo:
+        type: string
+        required: false
+      target_repo_branch:
+        type: string
+        required: false
       latexmk_use_xelatex:
         default: false
         type: boolean
@@ -25,6 +31,9 @@ on:
       submodules:
         default: false
         type: boolean
+    secrets:
+      target_repo_private_key:
+        required: false
 
 jobs:
   setup:
@@ -83,3 +92,91 @@ jobs:
           target_branch: ${{ inputs.target_branch }}
           latexmk_use_xelatex: ${{ inputs.latexmk_use_xelatex }}
           docker_image: ${{ inputs.docker_image }}
+
+  setup_target_repo:
+    name: Setup target repository
+    runs-on: ubuntu-latest
+    if: ${{
+        inputs.target_repo && (
+          github.ref_name == 'current' ||
+          (inputs.build_future_branches && startsWith(github.ref_name, 'future/'))
+        )
+      }}
+    steps:
+
+      - name: Checkout the target repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.target_repo }}
+          ssh-key: ${{ secrets.target_repo_private_key }}
+
+      - name: Create the target repository branch
+        shell: bash
+        run: |
+          git checkout --orphan ${{ inputs.target_repo_branch }}
+          git reset --hard
+
+      - name: Commit and push (fails silently if the branch already exists)
+        if: steps.check_target_branch.ok == false
+        uses: stefanzweifel/git-auto-commit-action@v5
+        continue-on-error: true
+        with:
+          branch: ${{ inputs.target_repo_branch }}
+          commit_message: 'Create repository branch'
+          create_branch: true
+          commit_options: '--allow-empty'
+          skip_dirty_check: true
+
+  push_to_target_repo:
+    name: Push to target repository
+    needs: [build, setup_target_repo]
+    runs-on: ubuntu-latest
+    if: ${{
+        inputs.target_repo && (
+          github.ref_name == 'current' ||
+          (inputs.build_future_branches && startsWith(github.ref_name, 'future/'))
+        )
+      }}
+    steps:
+
+      - name: Checkout the target branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_branch }}
+          path: src
+
+      - name: Checkout the target repository branch
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.target_repo }}
+          ref: ${{ inputs.target_repo_branch }}
+          path: dst
+          ssh-key: ${{ secrets.target_repo_private_key }}
+      
+      - name: Populate the target repository branch
+        shell: bash
+        run: |
+          cp -Rf src/* dst/
+
+      - name: Build HTML index on target repository branch
+        uses: kostrykin/build-html-index-action@v0.1
+        with:
+          working-directory: dst
+          pattern: '**/*.pdf'
+
+      - name: Compose commit message
+        id: commit_message
+        run: |
+          echo "text<<EOF" >> $GITHUB_OUTPUT
+          echo "Auto-update" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "Triggered by: ${{ github.sha }}" >> $GITHUB_OUTPUT
+          echo "On repository: ${{ github.event.repository.name }} @${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Commit and push
+        if: steps.check_target_branch.ok == false
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          repository: dst
+          commit_message: ${{ steps.commit_message.outputs.text }}
