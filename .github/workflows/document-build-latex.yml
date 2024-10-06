@@ -178,7 +178,6 @@ jobs:
       - name: Commit and push
         if: steps.check_target_branch.ok == false
         uses: stefanzweifel/git-auto-commit-action@v5
-        continue-on-error: true
         with:
           repository: dst
           commit_message: ${{ steps.commit_message.text }}
