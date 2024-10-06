@@ -154,17 +154,17 @@ jobs:
           repository: ${{ inputs.target_repo }}
           ref: ${{ github.event.repository.name }}
           path: dst
-          token: ${{ secrets.target_repo_auth }}
+          ssh-key: ${{ secrets.target_repo_private_key }}
       
       - name: Populate the target repository branch
         shell: bash
         run: |
           cp -Rf src/* dst/
 
-      - name: Setup deploy key for write access to target repository
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.target_repo_private_key }}
+#      - name: Setup deploy key for write access to target repository
+#        uses: webfactory/ssh-agent@v0.9.0
+#        with:
+#          ssh-private-key: ${{ secrets.target_repo_private_key }}
 
       - name: Commit and push
         if: steps.check_target_branch.ok == false
