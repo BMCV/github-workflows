@@ -32,9 +32,6 @@ on:
         default: false
         type: boolean
     secrets:
-      target_repo_auth:
-        required: false
-        default: ${{ github.token }}
       target_repo_private_key:
         required: false
 
