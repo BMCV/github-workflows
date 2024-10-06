@@ -148,7 +148,7 @@ jobs:
           ref: ${{ inputs.target_branch }}
           path: src
 
-      - name: Checkout the target repository branch (test)
+      - name: Checkout the target repository branch
         uses: actions/checkout@v4
         with:
           repository: ${{ inputs.target_repo }}
