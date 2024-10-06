@@ -71,9 +71,11 @@ jobs:
     needs: [setup]
     runs-on: ubuntu-latest
     if: ${{
-        github.event_name == 'pull_request' ||
-        github.ref_name == 'current' ||
-        (inputs.build_future_branches && startsWith(github.ref_name, 'future/'))
+        always() && (
+          github.event_name == 'pull_request' ||
+          github.ref_name == 'current' ||
+          (inputs.build_future_branches && startsWith(github.ref_name, 'future/'))
+        )
       }}
     permissions:
       contents: write
