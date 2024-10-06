@@ -160,7 +160,7 @@ jobs:
           cp -Rf src/* dst/
 
       - name: Build HTML index on target repository branch
-        uses: kostrykin/build-html-index-action@master
+        uses: kostrykin/build-html-index-action@v0.1
         with:
           working-directory: dst
           pattern: '**/*.pdf'
