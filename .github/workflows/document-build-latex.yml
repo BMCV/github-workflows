@@ -159,10 +159,26 @@ jobs:
         run: |
           cp -Rf src/* dst/
 
+      - name: Build HTML index on target repository branch
+        uses: kostrykin/build-html-index-action@master
+        with:
+          working-directory: dst
+          pattern: '**/*.pdf'
+
+      - name: Compose commit message
+        id: commit_message
+        run: |
+          echo "text<<EOF" >> $GITHUB_OUTPUT
+          echo "Auto-update" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "Triggered by: ${{ github.sha }}" >> $GITHUB_OUTPUT
+          echo "On repository: ${{ github.event.repository.name }} @${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Commit and push
         if: steps.check_target_branch.ok == false
         uses: stefanzweifel/git-auto-commit-action@v5
         continue-on-error: true
         with:
           repository: dst
-          commit_message: 'Auto-update triggered by ${{ github.sha }}'
+          commit_message: ${{ steps.commit_message.text }}
