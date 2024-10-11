@@ -14,6 +14,16 @@ Examples:
 - https://github.com/BMCV/mobi-fs5-python-assignments
 - https://github.com/BMCV/mobi-fs5-python-exam
 
+## Deploy a notebooks branch
+
+Workflow definitions:
+
+- .github/workflows/deploy-notebooks.yml
+
+Examples:
+
+- https://github.com/BMCV/mobi-fs3-python
+
 ## Run Python tests and report test coverage
 
 Workflow definitions:
