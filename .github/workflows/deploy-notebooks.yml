@@ -52,7 +52,7 @@ jobs:
           args = ' '.join(f'--exclude "{path}"' for path in path_list)
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
             print('value=' + args, file=output)
-        with:
+        env:
           exclude: ${{ inputs.exclude }}
 
       - name: Populate target directory
