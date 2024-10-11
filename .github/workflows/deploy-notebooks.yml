@@ -47,7 +47,7 @@ jobs:
         id: rsync_args
         shell: python
         run: |
-          import os
+          import json, os
           path_list = json.loads(os.environ['exclude'])
           args = ' '.join(f'--exclude "{path}"' for path in path_list)
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
