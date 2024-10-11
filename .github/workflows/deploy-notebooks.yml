@@ -6,7 +6,7 @@ on:
         required: true
       exclude:
         type: string
-        default '[]'
+        default: '[]'
         required: false
     secrets:
       target_repo_private_key:
