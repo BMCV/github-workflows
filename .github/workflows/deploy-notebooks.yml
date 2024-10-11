@@ -50,8 +50,8 @@ jobs:
           import json, os
           path_list = json.loads(os.environ['exclude'])
           args = ' '.join(f'--exclude "{path}"' for path in path_list)
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
-            print('value=' + args, file=output)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as outputs:
+            print('value=' + args, file=outputs)
         env:
           exclude: ${{ inputs.exclude }}
 
@@ -63,7 +63,7 @@ jobs:
             --exclude ".github/dependabot.yml" \
             --exclude "_solutions" \
             --exclude "_deploy" \
-            ${{ steps.rsync_args.output.value }}
+            ${{ steps.rsync_args.outputs.value }}
           cp -Rf src/_deploy/* "dst/"
 
       - name: Squash and deploy
