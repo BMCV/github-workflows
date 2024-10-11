@@ -60,6 +60,7 @@ jobs:
         run: |
           rsync -av "src/" "dst" \
             --exclude ".git" \
+            --exclude ".github/dependabot.yml" \
             --exclude "_solutions" \
             --exclude "_deploy" \
             ${{ steps.rsync_args.output.value }}
