@@ -1,0 +1,74 @@
+on:
+  workflow_call:
+    inputs:
+      target-repository:
+        type: string
+        required: true
+      exclude:
+        type: string
+        default '[]'
+        required: false
+    secrets:
+      target_repo_private_key:
+        required: false
+
+jobs:
+  deploy:
+    name: "Deploy"
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+        with:
+          path: src
+
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.target-repository }}
+          path: dst
+          fetch-depth: 1
+          ssh-key: ${{ secrets.target_repo_private_key }}
+
+      - name: Clean up target directory
+        shell: python
+        run: |
+          import os, pathlib, shutil
+          for filename in os.listdir('dst'):
+            if filename != '.git':
+              filepath = 'dst/' + filename
+              if os.path.isfile(filepath):
+                os.remove(filepath)
+              else:
+                shutil.rmtree('dst/' + filename)
+
+      - name: Compose rsync arguments
+        id: rsync_args
+        shell: python
+        run: |
+          import os
+          path_list = json.loads(os.environ['exclude'])
+          args = ' '.join(f'--exclude "{path}"' for path in path_list)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+            print('value=' + args, file=output)
+        with:
+          exclude: ${{ inputs.exclude }}
+
+      - name: Populate target directory
+        shell: bash
+        run: |
+          rsync -av "src/" "dst" \
+            --exclude ".git" \
+            --exclude "_solutions" \
+            --exclude "_deploy" \
+            ${{ steps.rsync_args.output.value }}
+          cp -Rf src/_deploy/* "dst/"
+
+      - name: Squash and deploy
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_options: '--amend --no-edit'
+          push_options: '--force'
+          skip_fetch: true
+          repository: dst
