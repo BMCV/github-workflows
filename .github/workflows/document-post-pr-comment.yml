@@ -1,5 +1,8 @@
 on:
   workflow_call:
+    secrets:
+      github_token:
+        required: false
 
 jobs:
   post_pr_comment:
@@ -10,3 +13,5 @@ jobs:
     steps:
 
       - uses: kostrykin/build-latex-document-action@v2.2.0
+        with:
+          github_token: ${{ secrets.github_token }}
