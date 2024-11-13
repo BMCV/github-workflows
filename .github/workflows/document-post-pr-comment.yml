@@ -1,7 +1,7 @@
 on:
   workflow_call:
     secrets:
-      artifact_github_token:
+      artifact_auth:
         required: false
 
 jobs:
@@ -14,4 +14,4 @@ jobs:
 
       - uses: kostrykin/build-latex-document-action@v2.2.0
         with:
-          github_token: ${{ secrets.artifact_github_token }}
+          github_token: ${{ secrets.artifact_auth }}
