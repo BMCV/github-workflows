@@ -26,7 +26,7 @@ on:
         default: false
         type: boolean
       docker_image:
-        required: false
+        default: ghcr.io/xu-cheng/texlive-full:20241201
         type: string
       submodules:
         default: false
