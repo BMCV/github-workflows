@@ -86,7 +86,7 @@ jobs:
         with:
           submodules: ${{ inputs.submodules }}
 
-      - uses: kostrykin/build-latex-document-action@v2.2.0
+      - uses: kostrykin/build-latex-document-action@v2.2.1
         with:
           working_directory: ${{ inputs.working_directory }}
           document_filename: ${{ inputs.document_filename }}
