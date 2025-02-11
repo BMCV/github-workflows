@@ -23,6 +23,7 @@ Workflow definitions:
 Examples:
 
 - https://github.com/BMCV/mobi-fs3-python-dev
+- https://github.com/BMCV/mobi-fs5-python-dev
 
 ## Run Python tests and report test coverage
 
