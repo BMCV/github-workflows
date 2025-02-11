@@ -1,8 +1,5 @@
 on:
   workflow_call:
-    secrets:
-      github-auth:
-        required: true
 
 jobs:
   post_pr_comment:
@@ -14,5 +11,3 @@ jobs:
     steps:
 
       - uses: kostrykin/post-gh-comment-from-artifact@v1.0.0
-        with:
-          github-auth: ${{ secrets.github-auth }}
