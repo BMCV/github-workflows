@@ -79,7 +79,7 @@ jobs:
 
     - name: Run custom command line
       if: ${{ inputs.run != '' }}
-      uses: kostrykin/report-test-coverage-action@v1.1.0
+      uses: kostrykin/report-test-coverage-action@v1.2.0
       with:
         working-directory: ${{ inputs.working-directory }}
         report: ${{ matrix.python-version == inputs.main_python_version }}
@@ -91,7 +91,7 @@ jobs:
 
     - name: Run default command line
       if: ${{ inputs.run == '' }}
-      uses: kostrykin/report-test-coverage-action@v1.1.0
+      uses: kostrykin/report-test-coverage-action@v1.2.0
       with:
         working-directory: ${{ inputs.working-directory }}
         report: ${{ matrix.python-version == inputs.main_python_version }}
