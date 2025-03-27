@@ -1,7 +1,7 @@
 on:
   workflow_call:
     inputs:
-      hide_by_signature:
+      signature:
         required: false
         type: string
         default: ''
@@ -17,4 +17,4 @@ jobs:
 
       - uses: kostrykin/post-gh-comment-from-artifact-action@master
         with:
-          hide_by_signature: ${{ inputs.hide_by_signature }}
+          signature: ${{ inputs.signature }}
