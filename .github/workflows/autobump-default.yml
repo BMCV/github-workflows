@@ -2,7 +2,7 @@ on:
   workflow_call:
 
 jobs:
-  post_pr_comment:
+  autobump:
     runs-on: ubuntu-latest
 
     permissions:
