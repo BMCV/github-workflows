@@ -5,7 +5,7 @@
 Workflow definitions:
 
 - .github/workflows/document-build-latex.yml
-- .github/workflows/post-pr-comment.yml
+- .github/workflows/document-post-pr-comment.yml
 
 Examples:
 
@@ -30,7 +30,7 @@ Examples:
 Workflow definitions:
 
 - .github/workflows/coverage-run.yml
-- .github/workflows/post-pr-comment.yml
+- .github/workflows/coverage-post-pr-comment.yml
 
 Examples:
 

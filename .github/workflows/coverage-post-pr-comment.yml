@@ -4,7 +4,7 @@ on:
       signature:
         required: false
         type: string
-        default: ''
+        default: '<!-- COVERAGE -->'
 
 jobs:
   post_pr_comment:
