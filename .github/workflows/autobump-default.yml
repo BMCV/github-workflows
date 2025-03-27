@@ -1,0 +1,25 @@
+on:
+  workflow_call:
+  schedule:
+    - cron: '30 0 1 * *'  # At 00:30 on day-of-month 1
+
+jobs:
+  post_pr_comment:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      - uses: kostrykin/autobump-action@v0.1.0
+        id: autobump
+        with:
+          glob: |
+            **/*.py
+            **/*.md
+
+      - run: echo "<${{ steps.autobump.outputs.pull-request-url }}>" >> $GITHUB_STEP_SUMMARY

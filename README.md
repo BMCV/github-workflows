@@ -37,3 +37,13 @@ Examples:
 - https://github.com/BMCV/giatools
 - https://github.com/BMCV/segmetrics
 - https://github.com/kostrykin/repype
+
+## Auto-bump year numbers
+
+Workflow definitions:
+
+- .github/workflows/autobump-default.yml
+
+Examples:
+
+- https://github.com/kostrykin/repype
