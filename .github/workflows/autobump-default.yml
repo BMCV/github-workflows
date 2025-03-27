@@ -1,7 +1,5 @@
 on:
   workflow_call:
-  schedule:
-    - cron: '30 0 1 * *'  # At 00:30 on day-of-month 1
 
 jobs:
   post_pr_comment:
