@@ -1,5 +1,9 @@
 on:
   workflow_call:
+    inputs:
+      branch:
+        required: false
+        type: string
 
 jobs:
   autobump:
@@ -13,6 +17,8 @@ jobs:
     steps:
 
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.branch }}
 
       - uses: kostrykin/autobump-action@v0.1
         id: autobump
