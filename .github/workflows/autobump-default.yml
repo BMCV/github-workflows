@@ -27,5 +27,6 @@ jobs:
             **/*.py
             **/*.md
             **/*.rst
+            LICENSE
 
       - run: echo "<${{ steps.autobump.outputs.pull-request-url }}>" >> $GITHUB_STEP_SUMMARY
