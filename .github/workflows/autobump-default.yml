@@ -3,6 +3,7 @@ on:
 
 jobs:
   autobump:
+    name: Autobump
     runs-on: ubuntu-latest
 
     permissions:
