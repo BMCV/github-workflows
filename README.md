@@ -46,4 +46,6 @@ Workflow definitions:
 
 Examples:
 
+- https://github.com/BMCV/giatools
+- https://github.com/BMCV/segmetrics
 - https://github.com/kostrykin/repype
