@@ -19,5 +19,6 @@ jobs:
           glob: |
             **/*.py
             **/*.md
+            **/*.rst
 
       - run: echo "<${{ steps.autobump.outputs.pull-request-url }}>" >> $GITHUB_STEP_SUMMARY
