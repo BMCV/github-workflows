@@ -49,3 +49,15 @@ Examples:
 - https://github.com/BMCV/giatools
 - https://github.com/BMCV/segmetrics
 - https://github.com/kostrykin/repype
+
+## Managing future branches
+
+Workflow definitions:
+
+- .github/workflows/create-future-branch.yml
+
+Examples:
+
+- https://github.com/BMCV/mobi-fs3-python-assignments
+- https://github.com/BMCV/mobi-fs3-python-lecture
+- https://github.com/BMCV/mobi-fs5-python-assignments
