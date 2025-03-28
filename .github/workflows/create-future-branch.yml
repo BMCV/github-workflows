@@ -42,8 +42,12 @@ on:
         default: FFFFFF
 
 jobs:
-  deploy:
+  create_future_branch:
+    name: Create future branch
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
     steps:
 
       - uses: actions/checkout@v4
