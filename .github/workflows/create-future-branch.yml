@@ -78,7 +78,7 @@ jobs:
               color: '${{ inputs.label_color }}'
             });
 
-      - uses: kostrykin/autobump-action@master
+      - uses: kostrykin/autobump-action@v0.1
         with:
           branch: future/${{ steps.semester.outputs.name }}
           glob: ''
