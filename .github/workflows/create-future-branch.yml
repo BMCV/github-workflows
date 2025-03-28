@@ -39,6 +39,7 @@ on:
         required: true
       label_color:
         description: The color of the semester label.
+        type: string
         default: FFFFFF
 
 jobs:
