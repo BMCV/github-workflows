@@ -3,6 +3,7 @@ on:
     inputs:
       init:
         type: string
+        required: false
         default: |
           import os
           import re
@@ -32,7 +33,6 @@ on:
 
           with open(preamble_filename, 'w') as fp:
               fp.write(preamble)
-        required: true
       semester:
         description: Either `ws` for winter semester or `ss` for summer semester.
         type: string
@@ -41,6 +41,7 @@ on:
         description: The color of the semester label.
         type: string
         default: FFFFFF
+        required: false
 
 jobs:
   create_future_branch:
