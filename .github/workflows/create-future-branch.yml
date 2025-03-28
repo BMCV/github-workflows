@@ -80,7 +80,7 @@ jobs:
 
       - uses: kostrykin/autobump-action@master
         with:
-          branch: future/${{ steps.branch.outputs.name }}
+          branch: future/${{ steps.semester.outputs.name }}
           glob: ''
           labels: ${{ steps.semester.outputs.description }}
           draft: true
