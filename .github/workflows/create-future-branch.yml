@@ -65,6 +65,14 @@ jobs:
         shell: python
         env:
           SEMESTER: ${{ steps.semester.outputs.name }}
+        if: ${{ inputs.init != '' }}
+
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git commit --allow-empty -m "Initialize future branch"
+        shell: bash
+        if: ${{ inputs.init == '' }}
 
       - name: Create label
         continue-on-error: true
