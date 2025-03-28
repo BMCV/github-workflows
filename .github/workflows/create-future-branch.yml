@@ -83,3 +83,5 @@ jobs:
           branch: future/${{ steps.semester.outputs.name }}
           glob: ''
           labels: ${{ steps.semester.outputs.description }}
+          commit-message: Initialize future branch
+          title: Merge future branch for ${{ steps.semester.outputs.description }}
